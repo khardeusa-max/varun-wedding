@@ -1,7 +1,7 @@
 /* ========================================
    VIBRANT MAHARASHTRIAN WEDDING THEME
 ======================================== */
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&family=Great+Vibes&display=swap");
 
 :root {
   --marigold: #ff9933;
@@ -288,20 +288,40 @@ a {
 }
 
 .hero-names {
-  font-family: var(--font-script);
-  font-size: clamp(3rem, 9vw, 6rem);
-  font-weight: 300;
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(3.5rem, 11vw, 7rem);
+  font-weight: 400;
   color: white;
-  line-height: 1.1;
-  margin-bottom: 4px;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  line-height: 1.2;
+  margin-bottom: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #ffe4b5 40%, #ffd700 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 4px 12px rgba(255, 215, 0, 0.3)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  animation: nameGlow 3s ease-in-out infinite;
+}
+
+@keyframes nameGlow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 4px 12px rgba(255, 215, 0, 0.3)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  }
+
+  50% {
+    filter: drop-shadow(0 4px 20px rgba(255, 215, 0, 0.5)) drop-shadow(0 2px 10px rgba(0, 0, 0, 0.3));
+  }
 }
 
 .hero-names .amp {
-  font-style: italic;
-  color: var(--gold);
-  font-size: 0.6em;
-  margin: 0 12px;
+  font-family: "Great Vibes", cursive;
+  font-style: normal;
+  -webkit-text-fill-color: var(--gold);
+  font-size: 0.55em;
+  margin: 0 8px;
+  opacity: 0.9;
 }
 
 .hero-date {
