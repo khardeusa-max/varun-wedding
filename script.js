@@ -2,7 +2,7 @@ const lenis = new Lenis({
   duration: 1.2,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smooth: true,
-  smoothTouch: false,
+  smoothTouch: true,
   touchMultiplier: 2,
 });
 function raf(time) {
@@ -86,26 +86,15 @@ setInterval(updateCD, 1000);
 })();
 
 // ---- Scroll Reveal ----
-const revealEls = document.querySelectorAll(".reveal");
 const revealObs = new IntersectionObserver(
   (entries) => {
     entries.forEach((e) => {
       if (e.isIntersecting) e.target.classList.add("visible");
     });
   },
-  { threshold: 0.05, rootMargin: "0px 0px -10px 0px" },
+  { threshold: 0.12, rootMargin: "0px 0px -30px 0px" },
 );
-revealEls.forEach((el) => revealObs.observe(el));
-
-// Fallback: also check on native scroll events (helps on mobile where Lenis doesn't control scroll)
-window.addEventListener("scroll", () => {
-  revealEls.forEach((el) => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 10 && rect.bottom > 0) {
-      el.classList.add("visible");
-    }
-  });
-}, { passive: true });
+document.querySelectorAll(".reveal").forEach((el) => revealObs.observe(el));
 
 // ---- Lightbox ----
 function openLightbox(el) {
@@ -124,11 +113,29 @@ document.addEventListener("keydown", (e) => {
 // ---- RSVP Google Sheets ----
 const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwHw_VW9M6Ck_Oc6p38WCTaoJzLAPLmS3jO6frzne9wnrloi-OFv5_7riN92foPW-HVww/exec';
 
+// ---- Show/hide accommodation based on attending answer ----
+document.getElementById('attending').addEventListener('change', function () {
+  const group = document.getElementById('accommodationGroup');
+  if (this.value === 'Yes, will attend') {
+    group.style.display = 'block';
+    requestAnimationFrame(() => {
+      group.style.maxHeight = '120px';
+      group.style.opacity = '1';
+    });
+  } else {
+    group.style.maxHeight = '0';
+    group.style.opacity = '0';
+    setTimeout(() => { group.style.display = 'none'; }, 400);
+    document.getElementById('accommodation').selectedIndex = 0;
+  }
+});
+
 function handleRSVP(e) {
   e.preventDefault();
   const name = document.getElementById("guestName").value.trim();
   const guests = document.getElementById("guestCount").value;
   const attending = document.getElementById("attending").value;
+  const accommodation = document.getElementById("accommodation").value || 'N/A';
   const message = document.getElementById("message").value.trim();
   if (!name || !guests || !attending) {
     alert("Please fill all required fields.");
@@ -144,6 +151,7 @@ function handleRSVP(e) {
     name: name,
     guests: guests,
     attending: attending,
+    accommodation: accommodation,
     message: message
   });
 
