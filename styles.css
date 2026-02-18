@@ -294,6 +294,7 @@ a {
   color: white;
   line-height: 1.2;
   margin-bottom: 8px;
+  padding: 0 20px;
   background: linear-gradient(180deg, #ffffff 0%, #ffe4b5 40%, #ffd700 100%);
   -webkit-background-clip: text;
   background-clip: text;
