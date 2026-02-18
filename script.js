@@ -1,4 +1,3 @@
-const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 const lenis = new Lenis({
   duration: 1.2,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -10,13 +9,12 @@ function raf(time) {
   lenis.raf(time);
   requestAnimationFrame(raf);
 
-  // 3D Skew Effect (disabled on touch devices to prevent animation issues)
-  if (!isTouchDevice) {
-    const content = document.getElementById('main-content');
-    if (content) {
-      const skew = Math.min(Math.max(lenis.velocity * 0.15, -7), 7);
-      content.style.transform = `skewY(${skew}deg)`;
-    }
+  // 3D Skew Effect
+  const content = document.getElementById('main-content');
+  if (content) {
+    // Skew based on velocity (limit to small angles)
+    const skew = Math.min(Math.max(lenis.velocity * 0.15, -7), 7);
+    content.style.transform = `skewY(${skew}deg)`;
   }
 }
 requestAnimationFrame(raf);
@@ -88,17 +86,26 @@ setInterval(updateCD, 1000);
 })();
 
 // ---- Scroll Reveal ----
-const revealThreshold = isTouchDevice ? 0.05 : 0.12;
-const revealMargin = isTouchDevice ? "0px 0px -10px 0px" : "0px 0px -30px 0px";
+const revealEls = document.querySelectorAll(".reveal");
 const revealObs = new IntersectionObserver(
   (entries) => {
     entries.forEach((e) => {
       if (e.isIntersecting) e.target.classList.add("visible");
     });
   },
-  { threshold: revealThreshold, rootMargin: revealMargin },
+  { threshold: 0.05, rootMargin: "0px 0px -10px 0px" },
 );
-document.querySelectorAll(".reveal").forEach((el) => revealObs.observe(el));
+revealEls.forEach((el) => revealObs.observe(el));
+
+// Fallback: also check on native scroll events (helps on mobile where Lenis doesn't control scroll)
+window.addEventListener("scroll", () => {
+  revealEls.forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 10 && rect.bottom > 0) {
+      el.classList.add("visible");
+    }
+  });
+}, { passive: true });
 
 // ---- Lightbox ----
 function openLightbox(el) {
