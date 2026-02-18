@@ -590,32 +590,25 @@ a {
 }
 
 .event-info {
-  text-align: left;
+  text-align: center;
   max-width: 480px;
   margin: 0 auto;
 }
 
-.event-row {
-  display: flex;
-  gap: 10px;
+.event-text {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 8px;
-  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
-.event-row .icon {
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-
-.event-row strong {
+.event-text:first-child {
+  font-weight: 700;
   color: var(--gold);
-  min-width: 65px;
-  flex-shrink: 0;
+  margin-bottom: 4px;
 }
 
-.event-row span {
-  color: rgba(255, 255, 255, 0.85);
-}
+
 
 .event-dots {
   display: flex;
