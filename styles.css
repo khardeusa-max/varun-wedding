@@ -275,16 +275,36 @@ a {
   }
 }
 
-.hero-ganesha {
+.hero-ganesha-clipper {
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  object-fit: cover;
   border: 3px solid rgba(255, 215, 0, 0.6);
   box-shadow:
     0 0 40px rgba(255, 215, 0, 0.3),
     0 0 80px rgba(255, 215, 0, 0.1);
   animation: gentleGlow 3s ease-in-out infinite;
+
+  /* SAFARI FIXES */
+  overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  transform: translateZ(0);
+  background: white;
+  /* Fallback background if image transparent */
+  position: relative;
+  /* Ensure z-index works if needed */
+  z-index: 2;
+  /* Keep above ring */
+}
+
+.hero-ganesha-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+  /* Double safety */
 }
 
 @keyframes gentleGlow {
