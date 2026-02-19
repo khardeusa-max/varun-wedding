@@ -287,10 +287,15 @@ a {
 
   /* SAFARI FIXES */
   overflow: hidden;
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
-  mask-image: radial-gradient(white, black);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   transform: translateZ(0);
-  background: white;
+  -webkit-transform: translateZ(0);
+  /* Use border-radius for the visual border clipping */
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  /* Force hardware acceleration for borders */
+  will-change: transform;
   /* Fallback background if image transparent */
   position: relative;
   /* Ensure z-index works if needed */
